@@ -16,7 +16,6 @@ If this claim is incorrect, and the given arrangement of string in words cannot 
 
 Otherwise, return a string of the unique letters in the new alien language sorted in lexicographically increasing order by the new language's rules. If there are multiple solutions, return any of them.
 
- 
 
 Example 1:
 
