@@ -48,7 +48,7 @@ All the strings of words are unique.
 #include<bits/stdc++.h>
 using namespace std;
 
-// solution 1
+/*-------------------------------------- solution 1 Starts ----------------------------------*/
 
 /*
     This "word search II" problem can be solved using another approach 
