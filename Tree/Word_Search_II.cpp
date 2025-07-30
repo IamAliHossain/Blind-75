@@ -41,6 +41,150 @@ All the strings of words are unique.
 
 */
 
+
+
+// Solution approach : DFS + TRIE
+
+#include<bits/stdc++.h>
+using namespace std;
+
+// solution 1
+
+/*
+    This "word search II" problem can be solved using another approach 
+    but TRIE the most efficient data structure
+
+    Step1 --> 
+        to do this first need to insert the given word to TRIE .
+    Step2 -->
+        To search for given string we must traverse throuh board using DFS technique for each cell
+
+
+        ✅ Time Complexity :
+            N = board.size()
+            M = board[0].size();
+            K = words.size();
+            L = max length string from words
+
+            for insert word in Trie takes O(K)
+            for dfs call it takes O(N * M * 4^L)
+
+            therefore TC : O(N * M * 4^L)
+    
+        ✅ Total Space Complexity:
+            W = number of words in words
+            L_avg = average length of a word in words
+            L_max = maximum length of a word
+
+            O(S + W × L_avg + K)
+            (Trie + matched words + call stack)
+
+            therefore SC : O(W × L_avg)
+
+*/
+
+class Node{
+    public:
+    Node* children[26];
+    bool endChar = false;
+
+    bool containsKey(char ch){
+        if(children[ch - 'a'] != NULL){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    void put(char ch, Node* node){
+        children[ch - 'a'] = node;
+    }
+    Node* get(char ch){
+        return children[ch - 'a'];
+    }
+
+};
+
+class Trie{
+    public:
+    Node* root ;
+
+    Trie(){
+        root = new Node();
+    }
+    
+    void insert(string word){
+        Node* node = root;
+        for(auto ch : word){
+            if(!node->containsKey(ch)){
+                Node* newNode = new Node();
+                node->put(ch, newNode);
+            }
+            node = node->get(ch);
+        }
+        node->endChar = true; 
+    }
+
+    void dfs(int i, int j, int n, int m, vector<vector<char>>& board, Node* curr, string target, vector<string> &ans){
+        if(i < 0 || j < 0 || i== n || j == m || !curr || board[i][j] == '$' || !curr->containsKey(board[i][j])) return;
+        target += board[i][j];
+        Node* check = curr->get(board[i][j]);
+        // if I get my target word then pushing the targert string in ans.
+        if(check->endChar){
+            ans.push_back(target);
+            // to avoid duplicate make last as false
+            check->endChar = false;
+        }
+    
+        char ch = board[i][j];
+        board[i][j] = '$';
+        dfs(i+1, j, n, m, board, curr->get(ch), target, ans); 
+        dfs(i-1, j, n, m, board, curr->get(ch), target, ans);
+        dfs(i, j+1, n, m, board, curr->get(ch), target, ans);
+        dfs(i, j-1, n, m, board, curr->get(ch), target, ans);
+
+        board[i][j] = ch;
+    }
+};
+
+
+class Solution {
+public:
+    vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
+        int n = board.size();
+        int m = board[0].size();
+        
+        Trie trieDS;
+        // insert the given string words to trie data structur
+        for(auto word : words){
+            trieDS.insert(word);
+        }
+        
+
+        Node* node = trieDS.root;
+        vector<string> ans;
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                string target ="";
+                trieDS.dfs(i, j, n, m, board, node, target, ans);
+            }
+        }
+        return ans;
+    }
+};
+
+
+/*-------------------------------------- solution 1 Ends----------------------------------*/
+
+
+
+
+
+
+
+
+/*-------------------------------------- solution 2 Starts ----------------------------------*/
+
 /*
     Time complexity: O(m*n*max(length of a word in the array ‘words’)), 
                     m*n because DFS calls are made for every cell in search of a word, 
@@ -53,13 +197,6 @@ All the strings of words are unique.
                     So the trie data structure can consume the largest space in the worst case.
 
 */
-
-// Solution approach : DFS + TRIE
-
-#include<bits/stdc++.h>
-using namespace std;
-
-
 struct Node{
     Node* links[26];
     bool flag = false;
