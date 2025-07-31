@@ -4,14 +4,21 @@
     Problem Name : Set Matrix Zeroes
 */
 
-/*  
-    Better Solution
-    Time Complexity : O(N*M)
-    Space Complexity: O(N + M)
 
-*/
 #include<bits/stdc++.h>
 using namespace std;
+
+/*  
+    Better Solution
+    Time Complexity : O(N*M * log (N + M))
+    Space Complexity: O(N + M)
+
+    but if we use unordered set instead of set 
+    then Time Complexity will turns to (N * M) because set takes O(logn) time 
+    for find function whereas unordered_set takes O(1) time.
+
+    So better use vector kono pera nai ar!
+*/
 
 class Solution {
 public:
@@ -28,14 +35,14 @@ public:
             }
         }
         for(int i=0; i<n; i++){
-            if(rowSe.find(i) != rowSe.end()){
+            if(rowSe.find(i) != rowSe.end()){ // logn
                 for(int col=0; col<m; col++){
                     matrix[i][col] = 0;
                 }
             }
         }
         for(int j=0; j<m; j++){ 
-            if(colSe.find(j) != colSe.end()){
+            if(colSe.find(j) != colSe.end()){ // logm
                 for(int row=0; row<n; row++){
                     matrix[row][j] = 0;
                 }
