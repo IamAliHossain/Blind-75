@@ -31,7 +31,6 @@ Input: words = ["z","x","z"]
 Output: ""
 Explanation: The order is invalid, so return "".
  
-
 Constraints:
 
 1 <= words.length <= 100
