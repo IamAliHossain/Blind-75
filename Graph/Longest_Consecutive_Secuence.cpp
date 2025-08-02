@@ -28,8 +28,8 @@
 
     Constraints:
 
-    0 <= nums.length <= 105
-    -109 <= nums[i] <= 109
+    0 <= nums.length <= 10^5
+    -10^9 <= nums[i] <= 10^9
 */
 
 // To solve this problem in O(N) we need to use set data structure
@@ -55,9 +55,9 @@ public:
         
         int mxCnt = 1, left = 0, right = 1;
         for(auto x: hash){ // O(N+N)
-            if(hash.find(x - 1) == hash.end()){
+            if(hash.find(x - 1) == hash.end()){  // only start from sequence head else get runtime error
                 int cnt = 1 ;
-                while(hash.find(x + 1) != hash.end()){
+                while(hash.find(x + 1) != hash.end()){ // takes O(1) in average 
                     cnt++;
                     x = x+1;
                 }
@@ -99,7 +99,6 @@ public:
                 mxCnt = max(mxCnt, right - left);
             }
             else{
-                
                 left = right;
                 right++;
             }
