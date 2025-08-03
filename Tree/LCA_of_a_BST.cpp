@@ -58,7 +58,9 @@ struct TreeNode {
 
 
 /*
-    Approach : 
+    Approach 1 only for BST: 
+
+    BST property is root is greater than left child whereas root is less than right child
     since this is BST the value is sorted if we traverse it in inorder traverse .
     
     if root greater than both p & q then ancestor is on the right so traverse to right
@@ -88,5 +90,46 @@ public:
             return lowestCommonAncestor(root->right, p, q);
         }
         return root;
+    }
+};
+
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+
+ /*
+    Approach 2 for BS ans BST both: 
+    
+
+    Time Complexity : O(N) we are traversing each node of the tree
+    Space Complexity : O(N) for call stack 
+
+*/
+class Solution {
+public:
+    TreeNode* LCA(TreeNode* root, TreeNode* p, TreeNode* q){
+        if(root == NULL) return NULL;
+        if(root == p) return p;
+        if(root == q) return q;
+        TreeNode* leftChild = LCA(root->left, p, q);
+        TreeNode* rightChild = LCA(root->right, p, q);
+
+        if(leftChild == NULL){
+            return rightChild;
+        }
+        else if(rightChild == NULL){
+            return leftChild;
+        }
+        return root; // else both are equal to lest and right node so root is lca
+    }
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        return LCA(root, p, q);
     }
 };
