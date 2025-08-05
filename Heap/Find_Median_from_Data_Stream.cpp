@@ -40,7 +40,7 @@ medianFinder.findMedian(); // return 2.0
 
 Constraints:
 
--105 <= num <= 10^5
+-10^5 <= num <= 10^5
 There will be at least one element in the data structure before calling findMedian.
 At most 5 * 10^4 calls will be made to addNum and findMedian.
  
@@ -57,9 +57,9 @@ using namespace std;
 
 /*
     Time Complexity :
-        for addNum() : O(logn) only  for push pop operation
-        for findMedian() : O(1) only  for arithmetic operation
-        so TC : O(logn)
+        for addNum() : O(logn) only for each push pop operation
+        for findMedian() : O(1) only for each arithmetic operation
+        so TC : O(n*logn)
         
     Space Complexity : 
         O(n) for using priority_queue
@@ -75,23 +75,25 @@ public:
     MedianFinder() {
         
     }
-    //maxHeap will contains lower values to return the maximum and minHeap will contains max values to return the minimum 
+    /* maxHeap(left half) stores lower values to ensure & return the maximumn value from the top
+       and minHeap(right half) stores max values to ensure & return the minimum from the top */
     void addNum(int num) {
-        maxHeap.push(num);
-        minHeap.push(maxHeap.top());
-        maxHeap.pop();
+        maxHeap.push(num); // O(logn)
+        minHeap.push(maxHeap.top()); // O(logn)
+        maxHeap.pop(); // O(logn)
+        
         // if minHeap size is greater than maxHeap we will remove the top of minHeap and push it to maxHeap
         if(minHeap.size() > maxHeap.size()){
-            maxHeap.push(minHeap.top());
-            minHeap.pop();
+            maxHeap.push(minHeap.top()); // O(logn)
+            minHeap.pop(); // O(logn)
         }
     }
     
     double findMedian() {
         if(maxHeap.size() == minHeap.size()){
-            return (maxHeap.top() + minHeap.top()) / 2.0 ;
+            return (maxHeap.top() + minHeap.top()) / 2.0 ; // O(1)
         }
-        else return maxHeap.top();
+        else return maxHeap.top(); // O(1)
     }
 };
 
