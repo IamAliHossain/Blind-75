@@ -6,16 +6,16 @@ using namespace std;
 
 
 
-// This is Max-heap every parent node wil be greater than child node
+// This is Min-heap every parent node have to be less than child node
 void heapifyForMinHeap(vector<int> &ar, int n, int i){
     int smallest = i;
     int left = 2*i + 1;
     int right = 2*i + 2;
 
-    if(smallest < n && ar[smallest] > ar[left]){
+    if(left < n && ar[smallest] > ar[left]){
         smallest = left;
     }
-    if(smallest < n && ar[smallest] > ar[right]){
+    if(right < n && ar[smallest] > ar[right]){
         smallest = right;
     }
 
@@ -27,16 +27,16 @@ void heapifyForMinHeap(vector<int> &ar, int n, int i){
 
 
 
-// This is Min-heap where every parent node wil be less than child node
+// This is Max-heap where every parent node have to be greater than child node
 void heapifyForMaxHeap(vector<int> &ar, int n, int i){
     int largest = i;
     int left = 2*i + 1;
     int right = 2*i + 2;
 
-    if(largest < n && ar[largest] > ar[left]){
+    if(left < n && ar[largest] < ar[left]){
         largest = left;
     }
-    if(largest < n && ar[largest] > ar[right]){
+    if(right < n && ar[largest] < ar[right]){
         largest = right;
     }
 
@@ -51,7 +51,7 @@ int  main(){
 
     int n = ar.size();
   
-    for(int i=n/2-1; i>=0; i--){
+    for(int i=(n/2)-1; i>=0; i--){
         heapifyForMinHeap(ar, n, i);
         heapifyForMaxHeap(ar, n, i);
     }
