@@ -56,6 +56,87 @@ struct TreeNode {
 // For more clear understant just Dry-run the recursion process it will clear
 // Editorial video : https://www.youtube.com/watch?v=WszrfSwMz58
 
+
+/*
+    Dry Run for input : [20, -9, 20, null, null, 15, 7 ]
+    Output is : 55
+
+    3️⃣ Step-by-Step Recursion Trace
+    🟢 Leaf Nodes (Bottom থেকে শুরু)
+
+    Node 15
+
+            left = 0
+
+            right = 0
+
+            currSum = 15 + 0 + 0 = 15
+
+            maxPathSum = max(-∞, 15) = 15
+
+            return = max(15+0, 15+0) = 15
+
+    Node 7: 
+            left = 0
+
+            right = 0
+
+            currSum = 7
+
+        maxPathSum = max(15, 7) = 15
+
+        return = 7
+
+    🟢 Node 20 (right child of root)
+
+            leftSum = max(0, dfs(15)) = max(0, 15) = 15
+
+            rightSum = max(0, dfs(7)) = max(0, 7) = 7
+
+            currSum = 20 + 15 + 7 = 42
+
+            maxPathSum = max(15, 42) = 42
+
+            return = max(20+15, 20+7) = max(35, 27) = 35
+
+    🟢 Node -9 (left child of root)
+
+            left = 0, right = 0
+
+            currSum = -9
+
+            maxPathSum = max(42, -9) = 42
+
+            return = max(-9, -9) = -9
+
+    🟢 Root Node 20
+
+            leftSum = max(0, dfs(-9)) = max(0, -9) = 0
+
+            rightSum = max(0, dfs(20_right)) = max(0, 35) = 35
+
+            currSum = 20 + 0 + 35 = 55
+
+            maxPathSum = max(42, 55) = 55
+
+            return = max(20+0, 20+35) = max(20, 55) = 55
+
+    4️⃣ Final Result
+
+    Maximum Path Sum = 55
+
+    Path = 15 → 20 → 20
+
+    🔎 Recursion Tree Flow Summary
+    dfs(15) = 15   → maxPathSum = 15
+    dfs(7)  = 7    → maxPathSum = 15
+    dfs(20_right) = 35 → maxPathSum = 42
+    dfs(-9) = -9   → maxPathSum = 42
+    dfs(20_root) = 55 → maxPathSum = 55
+
+*/
+
+
 class Solution {
 public:
     int sum(TreeNode* root, int &maxi){
@@ -70,7 +151,7 @@ public:
         int currSum = root->val + leftNode + rightNode ;
         maxi = max(maxi, currSum);
         
-        //this line for taking maximum node either left path or right path from a node
+        //this line for taking maximum node either left path or right path from a node returns to parent node
         return root->val + max(0, max(leftNode, rightNode));
     }
     int maxPathSum(TreeNode* root) {
