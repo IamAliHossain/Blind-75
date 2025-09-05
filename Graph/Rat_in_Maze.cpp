@@ -86,3 +86,46 @@ class Solution {
         
     }
 };
+
+
+/* 
+    For better understanding the move see dry run of dfst trace table followed by
+
+    maze =[
+            [1, 0, 0, 0],
+            [1, 1, 0, 1],
+            [1, 1, 0, 0],
+            [0, 1, 1, 1]
+        ]
+    Target: (3,3).
+    
+    DFS Trace Table Format
+    Step	i,j	    PathSoFar(res)	    Move Called	    Action/Comment
+    1	    0,0	    ""	                D	            Move down to (1,0)
+    2	    1,0	    "D"	                D	            Move down to (2,0)
+    3	    2,0	    "DD"	            D	            (3,0) blocked → return
+    4	    2,0	    "DD"	            U	            (1,0) visited → return
+    5	    2,0	    "DD"	            R	            Move right to (2,1)
+    6	    2,1	    "DDR"	            D	            Move down to (3,1)
+    7	    3,1	    "DDRD"	            D	            (4,1) out of bounds → return
+    8	    3,1	    "DDRD"	            U	            (2,1) visited → return
+    9	    3,1	    "DDRD"	            R	            Move right to (3,2)
+    10	    3,2	    "DDRDR"	            D	            (4,2) out of bounds → return
+    11	    3,2	    "DDRDR"	            U	            (2,2) blocked → return
+    12	    3,2	    "DDRDR"	            R	            Move right to (3,3) → target reached → add "DDRDRR"
+    13	    3,3	    "DDRDRR"	        -	            Path complete, backtrack to (3,2)
+    14	    3,2	    "DDRDR"	            L	            (3,1) visited → return
+    15	    3,1	    "DDRD"	            L	            (3,0) blocked → return
+    16	    2,1	    "DDR"	            L	            (2,0) visited → return
+    17	    2,0	    "DD"	            L	            (2,-1) invalid → return, backtrack to (1,0)
+    18	    1,0	    "D"	                U	            (0,0) visited → return
+    19	    1,0	    "D"	                R	            Move right to (1,1)
+    20	    1,1	    "DR"	            D	            Move down to (2,1)
+    21	    2,1	    "DRD"	            D	            Move down to (3,1)
+    22	    3,1	    "DRDD"	            R	            Move right to (3,2)
+    23	    3,2	    "DRDDR"	            R	            Move right to (3,3) → target reached → add "DRDDRR"
+    24	    3,3	    "DRDDRR"	        -	            Path complete, backtrack
+
+
+
+*/
