@@ -1,12 +1,12 @@
 /*
-      This Problem is from 450 DSA cracker list enlisted from GFG
+      This Problem is from 450 DSA cracker list enlisted from leetcode and blind75
 
-    Problem Link : https://www.geeksforgeeks.org/problems/rat-in-a-maze-problem/1
-    Problem Naem : Rat in a Maze Problem - I
+    Problem Link : https://leetcode.com/problems/flood-fill/description/
+    Problem Name : Flood Fill
 
-    Difficulty   : Medium
+    Difficulty   : Easy
 
-    Date : 05-09-2025
+    Date : 06-09-2025
 
 ----------------------------------------------------------------------------------------------------
     
