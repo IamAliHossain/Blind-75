@@ -73,7 +73,9 @@
 
     This DFS solution is done by on my own approach
 
-    TC : O(4^(n * m))
+    It seems like O(4^(n * m)) but because of using visited array it becames O(n * m) actually
+    
+    TC : O(n * m)
     SC : O(n * m)
 
 */
