@@ -86,34 +86,87 @@ public:
     }
 };
 
-    unordered_map<Node*, Node*> visited;
-
-    // Function to clone a graph.
-    Node* cloneGraph(Node* node) {
-        // If the input node is null, return null indicating no node to clone.
-        if (!node) return nullptr;
-
-        // If the node has been already visited, return the clone from visited.
-        if (visited.find(node) != visited.end()) return visited[node];
-
-        // Create a new node with the same value as the input node.
-        Node* cloneNode = new Node(node->val);
-        
-        // Record the visited node by mapping the original node to the clone.
-        // so that it can't go throuh infinte loop
-        visited[node] = cloneNode;
-
-        // Iterate over all neighbors of the input node.
-        for (auto& neighbor : node->neighbors) {
-            /*  this line try to push the original node but we need deep copy node
-                we will find deep copy node by creating new node, so send it to the cloneGraph function
-                clonedNode->neighbors.push_back(neighbor);
-            */
-
-            // Recursively call cloneGraph for each neighbor and add it to the cloned node's neighbors.
-            cloneNode->neighbors.push_back(cloneGraph(neighbor));
-        }
-
-        // Return the cloned node.
-        return cloneNode;
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    vector<Node*> neighbors;
+    Node() {
+        val = 0;
+        neighbors = vector<Node*>();
     }
+    Node(int _val) {
+        val = _val;
+        neighbors = vector<Node*>();
+    }
+    Node(int _val, vector<Node*> _neighbors) {
+        val = _val;
+        neighbors = _neighbors;
+    }
+};
+*/
+
+
+/*  
+    Why Need Node* → Node* Map in Graph Cloning
+
+    Problem:
+    * Graphs can have cycles and repeated neighbors.
+    * Without a map → you’ll clone the same node multiple times or fall into infinite recursion.
+
+    Solution:
+    Keep a map<Node*, Node*> (original → clone).
+    If a node is already in the map → reuse its clone.
+    If not → create clone and store in map.
+
+    Original graph :
+    1---2
+    |   |
+    |   |
+    4---3
+
+    here 1 has neighbor 2(1->2) and 2's neighbor is 3(1->2->3)
+    3's neighbor is 4(1->2->3->4) and 4's neighbor is 1 but this time 
+    4 will use prviou 1 in the map, won't creat a newnode as 1
+
+    if create then it will look like followed by:
+    1   1---2
+    |       |
+    |       |
+    4-------3
+
+    this is not like cloned graph hence we need a map
+
+    V = Number of vertex(nodes)
+    E = Number of Edges
+    TC : O(V + E)
+    SC : O(V + E)
+*/
+class Solution {
+public:
+    Node* dfs(Node* node, unordered_map<Node*, Node*> &vis){
+        // here I'm creating newnode and mapping it
+        Node* newNode = new Node(node->val);
+        vis[node] = newNode;
+
+        for(auto neighbor : node->neighbors){
+            if(vis.find(neighbor) == vis.end()){
+                // create neighbor's clone
+                (newNode->neighbors).push_back(dfs(neighbor, vis));
+            }
+            else{
+                // adding neighbor node if it is found in the map
+                (newNode->neighbors).push_back(vis[neighbor]);
+            }
+        }
+        return newNode;
+    }
+
+    Node* cloneGraph(Node* node) {
+        // if node is empty then return null
+        if(node == nullptr) return nullptr;
+        unordered_map<Node*, Node*> vis;
+        return dfs(node, vis);
+    }
+};
