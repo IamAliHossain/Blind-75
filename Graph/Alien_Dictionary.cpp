@@ -1,7 +1,7 @@
 /*
     Problem Link : https://leetcode.com/problems/alien-dictionary/description/
     Problem Name : 269. Alien Dictionary(Premium)
-    Difficulty   : Medium
+    Difficulty   : Hard
     Time Complexity : O(N * m) 
     Space Complexity : O(N * M) 
 
