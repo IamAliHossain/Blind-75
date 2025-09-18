@@ -101,7 +101,7 @@ class Solution {
                 if(colorTheGraph(vertex+1, V, graph, m, color)){
                     return true;
                 }
-                // backtrack
+                // If assigning color c doesn't lead to a solution then remove it 
                 color[vertex] = 0;
             }
         }
